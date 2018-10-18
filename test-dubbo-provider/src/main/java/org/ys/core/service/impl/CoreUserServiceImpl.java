@@ -21,50 +21,50 @@ public class CoreUserServiceImpl implements CoreUserService {
 
 	@Override
 	public void addUser(CoreUser coreUser) throws Exception {
-		if(null == coreUser){
-			throw new Exception("插入用户为空！");
+		if(null != coreUser){
+			coreUserDAO.addUser(coreUser);
 		}
-		coreUserDAO.addUser(coreUser);
 	}
 
 	@Override
 	public void deleteUserById(String userId) throws Exception {
-		if(StringUtils.isEmpty(userId)){
-			throw new Exception("删除用户Id为空！");
+		if(StringUtils.isNotEmpty(userId)){
+			coreUserDAO.deleteUserById(userId);
 		}
-		coreUserDAO.deleteUserById(userId);
 	}
 
 	@Override
 	public void updateUser(CoreUser coreUser) throws Exception {
-		if(null == coreUser){
-			throw new Exception("更新用户为空！");
+		if(null != coreUser){
+			coreUserDAO.updateUser(coreUser);
 		}
-		coreUserDAO.updateUser(coreUser);
 	}
 
 	@Override
-	public List<CoreUser> pageUserList(String hql, int startNum, int pageSize)throws Exception {
-		if(StringUtils.isEmpty(hql)){
-			throw new Exception("分页hql为空！");
+	public List<CoreUser> pageUserList(String hql, int pageNum, int pageSize)throws Exception {
+		List<CoreUser> userList = null;
+		if(StringUtils.isNotEmpty(hql)){
+			userList = coreUserDAO.pageUserList(hql, pageNum, pageSize);
 		}
-		return coreUserDAO.pageUserList(hql, startNum, pageSize);
+		return userList;
 	}
 
 	@Override
-	public long pageUserListCount(String hql) throws Exception {
-		if(StringUtils.isEmpty(hql)){
-			throw new Exception("分页总数hql为空！");
+	public int pageUserListCount(String hql) throws Exception {
+		int count = 0;
+		if(StringUtils.isNotEmpty(hql)){
+			count = coreUserDAO.pageUserListCount(hql);
 		}
-		return coreUserDAO.pageUserListCount(hql);
+		return count;
 	}
 
 	@Override
 	public CoreUser findUserById(String userId) throws Exception {
-		if(StringUtils.isEmpty(userId)){
-			throw new Exception("查找用户Id为空！");
+		CoreUser coreUser = null;
+		if(StringUtils.isNotEmpty(userId)){
+			coreUser = coreUserDAO.findUserById(userId);
 		}
-		return coreUserDAO.findUserById(userId);
+		return coreUser;
 	}
 
 }

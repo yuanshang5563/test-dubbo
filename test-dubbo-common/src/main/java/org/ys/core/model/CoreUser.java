@@ -1,7 +1,7 @@
 package org.ys.core.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,12 +27,16 @@ public class CoreUser implements Serializable{
 	private String password;
 	@Column(name="address",length=256)
 	private String address;
+	@Column(name="phone",length=20)
+	private String phone;	
 	@Column(name="email",length=256)
 	private String email;
-	@Column(name="age",length=3)
-	private int age;
 	@Column(name="birthday")
 	private Date birthday;
+	@Column(name="created_time")
+	private Date createdTime;
+	@Column(name="modified_time")
+	private Date modifiedTime;	
 	@Column(name="comment_context",length=1024)
 	private String commentContext;
 	
@@ -61,23 +65,35 @@ public class CoreUser implements Serializable{
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
 	public Date getBirthday() {
 		return birthday;
 	}
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+	public Date getModifiedTime() {
+		return modifiedTime;
+	}
+	public void setModifiedTime(Date modifiedTime) {
+		this.modifiedTime = modifiedTime;
 	}
 	public String getCommentContext() {
 		return commentContext;

@@ -1,7 +1,6 @@
-<%--<%@ page isELIgnored="false" %>--%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="/commons/jsp/top.jsp" %>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -41,9 +40,9 @@
 					<tbody>
 						<c:foreach item={pageInfo.list} var="user">
 						<tr>
-							<td class="text-center" text="${user.userName}"></td>
-							<td class="text-center" text="${user.password}"></td>
-							<td class="text-center" text="${user.phone}"></td>
+							<td class="text-center">${user.userName}</td>
+							<td class="text-center">${user.password}</td>
+							<td class="text-center">${user.phone}</td>
 							<td class="text-center">
 								<input type="button" class="btn btn-info btn-xs" value="查看" onclick="${user.userId}">
 								<input type="button" class="btn btn-primary btn-xs" value="修改">

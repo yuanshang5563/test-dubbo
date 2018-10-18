@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,46 +28,64 @@ public class CoreUserDAOImpl implements CoreUserDAO {
 
 	@Override
 	public void addUser(CoreUser coreUser) throws Exception {
-		this.getSession().save(coreUser);
+		if(null != coreUser){
+			this.getSession().save(coreUser);
+		}
 	}
 
 	@Override
 	public void deleteUserById(String userId) throws Exception {
-		Session session = this.getSession();
-		Query query = session.createQuery("delete CoreUser where userId=?");
-		query.setString(0, userId);
-		query.executeUpdate();
+		if(StringUtils.isNotEmpty(userId)){
+			Session session = this.getSession();
+			Query query = session.createQuery("delete CoreUser where userId=?");
+			query.setString(0, userId);
+			query.executeUpdate();	
+		}
 	}
 
 	@Override
 	public void updateUser(CoreUser coreUser) throws Exception {
-		this.getSession().update(coreUser);
+		if(null != coreUser){
+			this.getSession().update(coreUser);
+		}		
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CoreUser> pageUserList(String hql, int startNum, int pageSize)throws Exception {
-		Session session = this.getSession();
-		Query query = session.createQuery(hql);
-		query.setFirstResult(startNum);
-		query.setMaxResults(pageSize);
-		List<CoreUser> users = query.list();
+	public List<CoreUser> pageUserList(String hql, int pageNum, int pageSize)throws Exception {
+		List<CoreUser> users = null;
+		if(StringUtils.isNotEmpty(hql)){
+			Session session = this.getSession();
+			Query query = session.createQuery(hql);
+			query.setFirstResult(pageNum * pageSize);
+			query.setMaxResults(pageSize);
+			users = query.list();
+		}
 		return users;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public long pageUserListCount(String hql) throws Exception {
-		Session session = sessionFactory.openSession();
-		Query query = session.createQuery(hql);
-		List<Object> userCount = query.list();
-		session.close();
-		return (Long) userCount.get(0);
+	public int pageUserListCount(String hql) throws Exception {
+		int count = 0;
+		if(null != hql){
+			StringBuffer sb = new StringBuffer();
+			sb.append("select count(1) from (").append(hql).append(")");
+			Session session = sessionFactory.openSession();
+			Query query = session.createQuery(sb.toString());
+			List<Object> userCount = query.list();
+			session.close();
+			count = (Integer) userCount.get(0);
+		}
+		return count;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public CoreUser findUserById(String userId) throws Exception {
+		if(StringUtils.isEmpty(userId)){
+			return null;
+		}
 		Session session = this.getSession();
 		Query query = session.createQuery("from CoreUser where userId=?");
 		query.setString(0, userId);
