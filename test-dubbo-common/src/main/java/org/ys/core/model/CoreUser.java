@@ -37,6 +37,7 @@ public class CoreUser implements Serializable{
 	private Date createdTime;
 	@Column(name="modified_time")
 	private Date modifiedTime;	
+	
 	@Column(name="comment_context",length=1024)
 	private String commentContext;
 	
